@@ -112,6 +112,7 @@
         <module>common-rabbitmq</module>
         <module>common-contract-enricher</module>
         <module>common-testing</module>
+        <module>common-rabbitmq-starter</module>
     </modules>
 
     <dependencyManagement>

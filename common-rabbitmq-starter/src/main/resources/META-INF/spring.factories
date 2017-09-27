@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.dell.cpsd.common.rabbitmq.config.ConsumerConfig,\
+com.dell.cpsd.common.rabbitmq.config.RabbitConfig,\
+com.dell.cpsd.common.rabbitmq.config.RabbitMqProductionConfig
