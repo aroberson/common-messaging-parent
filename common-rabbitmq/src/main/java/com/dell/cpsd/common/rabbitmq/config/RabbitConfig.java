@@ -7,6 +7,7 @@ package com.dell.cpsd.common.rabbitmq.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -35,15 +36,19 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class RabbitConfig
 {
 
-    private static final Logger      LOGGER           = LoggerFactory.getLogger(RabbitConfig.class);
-    private static final int         MAX_ATTEMPTS     = 10;
-    private static final int         INITIAL_INTERVAL = 100;
-    private static final double      MULTIPLIER       = 2.0;
-    private static final int         MAX_INTERVAL     = 50000;
+    private static final Logger LOGGER           = LoggerFactory.getLogger(RabbitConfig.class);
+    private static final int    MAX_ATTEMPTS     = 10;
+    private static final int    INITIAL_INTERVAL = 100;
+    private static final double MULTIPLIER       = 2.0;
+    private static final int    MAX_INTERVAL     = 50000;
 
     @Autowired
     @Qualifier("rabbitConnectionFactory")
-    private ConnectionFactory        rabbitConnectionFactory;
+    private ConnectionFactory   rabbitConnectionFactory;
+
+    @Autowired
+    @Qualifier("rabbitPropertiesConfig")
+    private PropertiesConfig    propertiesConfig;
 
     /**
      * create bean for rabbitTemplate
@@ -133,6 +138,42 @@ public class RabbitConfig
     public DefaultClassMapper classMapper()
     {
         return new DefaultClassMapper();
+    }
+
+    /**
+     * create bean for hostName
+     * 
+     * @return {@link String}
+     */
+    @Bean
+    public String hostName()
+    {
+        try
+        {
+            return System.getProperty("container.id");
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Unable to identify containerId", e);
+        }
+    }
+
+    @Bean
+    public String replyTo()
+    {
+        return propertiesConfig.applicationName() + "." + hostName();
+    }
+
+    /**
+     * create bean for responseQueue
+     * 
+     * @return {@link Queue}
+     */
+    // TODO: To be moved to capability execution starter
+    @Bean
+    public Queue responseQueue()
+    {
+        return new Queue(propertiesConfig.responseQueueName() + "." + replyTo());
     }
 
 }
