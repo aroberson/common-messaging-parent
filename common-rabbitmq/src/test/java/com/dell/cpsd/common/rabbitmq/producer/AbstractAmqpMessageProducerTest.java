@@ -132,6 +132,7 @@ public class AbstractAmqpMessageProducerTest
         String correlationId = "dummyCorrelationId";
         String replyTo = "dummyReplyTo";
 
+        Mockito.when(exchange.getName()).thenReturn("exchangeName");
         concreteAmqpProducer.publishMessage(correlationId, replyTo, EXHCANGE_KEY, "dummyRoutingKey", new Object());
         doNothing().when(rabbitTemplate).convertAndSend(anyString(), anyString(), any(Object.class), any(PropertiesPostProcessor.class));
 

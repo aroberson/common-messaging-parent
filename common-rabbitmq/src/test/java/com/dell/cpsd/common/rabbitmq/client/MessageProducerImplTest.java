@@ -88,7 +88,6 @@ public class MessageProducerImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testConvertAndSendWithRoutingKeyNull()
     {
-        Mockito.doNothing().when(this.rabbitTemplate).convertAndSend(requestExchangeName, routingKey, this.requestMessage);
         this.classUnderTest.convertAndSend(requestExchangeName, null, this.requestMessage);
     }
 
@@ -98,7 +97,6 @@ public class MessageProducerImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testConvertAndSendWithRequestExchangeNull()
     {
-        Mockito.doNothing().when(this.rabbitTemplate).convertAndSend(requestExchangeName, routingKey, this.requestMessage);
         this.classUnderTest.convertAndSend(null, routingKey, this.requestMessage);
     }
 
@@ -108,7 +106,6 @@ public class MessageProducerImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testConvertAndSendWithRequestMessageNull()
     {
-        Mockito.doNothing().when(this.rabbitTemplate).convertAndSend(requestExchangeName, routingKey, this.requestMessage);
         this.classUnderTest.convertAndSend(requestExchangeName, routingKey, null);
     }
 

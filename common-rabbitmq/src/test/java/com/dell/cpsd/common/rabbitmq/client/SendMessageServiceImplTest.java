@@ -88,7 +88,6 @@ public class SendMessageServiceImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testSendMessageForNull_replyToAddressMethodOne() throws IllegalArgumentException
     {
-        Mockito.doNothing().when(messageProducer).convertAndSend(null, responseKey, responseMessage);
 
         classUnderTest.sendMessage(exchange, null, responseKey, responseMessage);
     }
@@ -101,8 +100,6 @@ public class SendMessageServiceImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testSendMessageForNull_responseKeyMethodOne() throws IllegalArgumentException
     {
-        Mockito.doNothing().when(messageProducer).convertAndSend(replyToAddress, null, responseMessage);
-
         classUnderTest.sendMessage(exchange, replyToAddress, null, responseMessage);
     }
 
@@ -127,8 +124,6 @@ public class SendMessageServiceImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testSendMessageForNull_replyToAddressMethodTwo() throws IllegalArgumentException
     {
-        Mockito.doNothing().when(messageProducer).convertAndSend(null, responseKey, responseMessage);
-
         classUnderTest.sendMessage(exchange, null, responseKey, responseMessage, placeHolder);
     }
 
@@ -140,8 +135,6 @@ public class SendMessageServiceImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testSendMessageForNull_responseKeyMethodTwo() throws IllegalArgumentException
     {
-        Mockito.doNothing().when(messageProducer).convertAndSend(replyToAddress, null, responseMessage);
-
         classUnderTest.sendMessage(exchange, replyToAddress, null, responseMessage, placeHolder);
     }
 
@@ -153,9 +146,6 @@ public class SendMessageServiceImplTest
     @Test(expected = IllegalArgumentException.class)
     public void testSendMessageForNull_placeHolderMethodTwo() throws IllegalArgumentException
     {
-
-        Mockito.doNothing().when(messageProducer).convertAndSend(replyToAddress, null, responseMessage);
-
         classUnderTest.sendMessage(exchange, replyToAddress, responseKey, responseMessage, null);
     }
 
