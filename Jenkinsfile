@@ -49,7 +49,16 @@ pipeline {
         }
         stage('Compile') {
             steps {
-                sh "mvn clean install -Dmaven.repo.local=.repo -DskipTests=true -DskipITs=true"
+            
+            script {
+                    if (env.BRANCH_NAME ==~ /master|stable|feature_ESTS_133853\/.*/) {
+                        sh "mvn clean deploy -Dmaven.repo.local=.repo -DskipTests=true -DskipITs=true"
+                    } else {
+                        sh "mvn clean install -Dmaven.repo.local=.repo -DskipTests=true -DskipITs=true"
+                    }
+                }
+            	
+                
             }
         }
         stage('Unit Testing') {
